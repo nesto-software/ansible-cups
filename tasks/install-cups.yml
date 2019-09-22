@@ -2,10 +2,9 @@
 
 - name: Ensure Cups is installed.
   apt:
-    name: "{{ item }}"
+    name: "{{ cups_package }}"
     state: present
-  with_items: "{{ cups_packages }}"
-
+    
 - name: Add pi to the cups admin group lpadmin
   shell: usermod -a -G lpadmin pi
 
