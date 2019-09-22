@@ -1,11 +1,3 @@
----
-- name: Removing all printers and classes defined in cups_printers_printers_and_classes_to_be_removed.
-  cups_lpadmin:
-    name: "{{item}}"
-    state: "absent"
-  with_items:
-    - "{{cups_printers_and_classes_to_be_removed}}"
-
 - name: Removing all printers and classes on server.
   cups_lpadmin:
     purge: True
@@ -32,15 +24,3 @@
     options: "{{item.options|default(omit)}}"
   with_items:
     - "{{cups_printer_list}}"
-
-- name: Create printer classes and assign printers to them
-  cups_lpadmin:
-    name: "{{item.name}}"
-    printer_or_class: "class"
-    state: "{{item.state|default(cups_class_default_state)}}"
-    location: "{{item.location|default(omit)}}"
-    info: "{{item.info|default(omit)}}"
-    shared: "{{item.shared|default(cups_class_default_is_shared)}}"
-    class_members: "{{item.members}}"
-  with_items:
-    - "{{cups_class_list}}"

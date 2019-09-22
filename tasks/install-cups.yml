@@ -1,0 +1,20 @@
+---
+- name: Update apt cache.
+  apt:
+    update_cache: yes
+    cache_valid_time: 600
+
+- name: Ensure Cups is installed.
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ cups_packages }}"
+
+- name: Add pi to the cups admin group lpadmin
+  shell: usermod -a -G lpadmin pi
+
+- name: Start Cups
+  service:
+    name: "{{ cups_daemon_name }}"
+    state: started
+    enabled: yes
