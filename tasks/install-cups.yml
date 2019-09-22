@@ -13,6 +13,14 @@
 - name: Add pi to the cups admin group lpadmin
   shell: usermod -a -G lpadmin pi
 
+- name: Add the cups conf file
+  template:
+    src: "{{ cups_conf_location }}"
+    dest: /etc/cups/cupsd.conf
+    owner: root
+    group: root
+    mode: '0644'
+
 - name: Start Cups
   service:
     name: "{{ cups_daemon_name }}"
